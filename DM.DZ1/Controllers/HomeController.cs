@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BusinessServices;
+using BusinessServices.Interfaces;
 
 namespace DM.DZ1.Controllers
 {
@@ -16,7 +18,9 @@ namespace DM.DZ1.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ITestServices ts = ServicesFactory.GetTestServices();
+            var test = ts.GetFirst();
+            ViewBag.Message = test.Name + " " + test.Surname;
 
             return View();
         }

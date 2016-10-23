@@ -71,6 +71,21 @@
     <Compile Include="Helpers\HelperService.cs" />
     <Compile Include="NoSQLDatabase\MongoDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SQLDatabase\AspNetRoles.cs">
+      <DependentUpon>DMDZ1Db.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SQLDatabase\AspNetUserClaims.cs">
+      <DependentUpon>DMDZ1Db.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SQLDatabase\AspNetUserLogins.cs">
+      <DependentUpon>DMDZ1Db.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SQLDatabase\AspNetUsers.cs">
+      <DependentUpon>DMDZ1Db.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SQLDatabase\C__MigrationHistory.cs">
+      <DependentUpon>DMDZ1Db.tt</DependentUpon>
+    </Compile>
     <Compile Include="SQLDatabase\DMDZ1Db.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
