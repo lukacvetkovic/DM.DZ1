@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using DM.DZ1.Models;
+using Microsoft.Owin.Security.Facebook;
 
 namespace DM.DZ1
 {
@@ -54,9 +55,27 @@ namespace DM.DZ1
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            var options = new FacebookAuthenticationOptions
+            {
+                AppId = "333212237053165",
+                AppSecret = "f7ce933adc500870a6fb00dab103bfd2",
+                Provider = new FacebookAuthenticationProvider
+                {
+                    OnAuthenticated = async context =>
+                    {
+                        // Retrieve the OAuth access token to store for subsequent API calls
+                        string accessToken = context.AccessToken;
+
+                        // Retrieve the username
+                        string facebookUserName = context.UserName;
+
+                        // You can even retrieve the full JSON-serialized user
+                        var serializedUser = context.User;
+                    }
+                }
+            };
+
+            app.UseFacebookAuthentication(options);
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
