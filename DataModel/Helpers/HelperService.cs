@@ -33,15 +33,18 @@ namespace DataModel.Helpers
             while (exception != null)
             {
                 sb.AppendLine("Inner Exception Type: ");
-                sb.AppendLine(exception.InnerException.GetType().ToString());
-                sb.AppendLine("Inner Exception: ");
-                sb.AppendLine(exception.InnerException.Message);
-                sb.AppendLine("Inner Source: ");
-                sb.AppendLine(exception.InnerException.Source);
-                if (exception.InnerException.StackTrace != null)
+                if (exception.InnerException != null)
                 {
-                    sb.AppendLine("Inner Stack Trace: ");
-                    sb.AppendLine(exception.InnerException.StackTrace);
+                    sb.AppendLine(exception.InnerException.GetType().ToString());
+                    sb.AppendLine("Inner Exception: ");
+                    sb.AppendLine(exception.InnerException.Message);
+                    sb.AppendLine("Inner Source: ");
+                    sb.AppendLine(exception.InnerException.Source);
+                    if (exception.InnerException.StackTrace != null)
+                    {
+                        sb.AppendLine("Inner Stack Trace: ");
+                        sb.AppendLine(exception.InnerException.StackTrace);
+                    }
                 }
                 sb.AppendLine("Exception Type: ");
                 sb.AppendLine(sb.GetType().ToString());
@@ -54,6 +57,7 @@ namespace DataModel.Helpers
                     sb.AppendLine();
                 }
                 exception = exception.InnerException;
+
             }
 
             return sb.ToString();

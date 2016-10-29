@@ -21,27 +21,27 @@ namespace CitiyInsertInMongo
             MongoDbRepository repo = new MongoDbRepository();
             var lines = File.ReadAllLines("gradovi.csv", Encoding.Default).Select(a => a.Split(';'));
 
-            //foreach (var line in lines)
-            //{
-            //    if (line[1] == "Grad")
-            //    {
-            //        String name = line[2];
-            //        String country = line[0];
+            foreach (var line in lines)
+            {
+                if (line[1] == "Grad")
+                {
+                    String name = line[2];
+                    String country = line[0];
 
 
-            //        String response = GetHelper(DECODERURL + name);
+                    String response = GetHelper(DECODERURL + name);
 
-            //        RootObject c = JSONHelper.Deserialize<RootObject>(response);
+                    RootObject c = JSONHelper.Deserialize<RootObject>(response);
 
-            //        if (c.status == "OK")
-            //        {
-            //            City city = new City() { County = country, Information = c.results.First(), Name = name };
+                    if (c.status == "OK")
+                    {
+                        City city = new City() { County = country, Information = c.results.First(), Name = name };
 
-            //            repo.AddOneSync(city);
-            //        }
+                        repo.AddOneSync(city);
+                    }
 
-            //    }
-            //}
+                }
+            }
 
 
 

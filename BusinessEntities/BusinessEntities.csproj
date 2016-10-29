@@ -52,7 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CityInformation.cs" />
+    <Compile Include="City.cs" />
+    <Compile Include="CityWeather.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WeatherInformation.cs" />
+    <Compile Include="YahooResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using BusinessServices;
@@ -16,11 +17,14 @@ namespace DM.DZ1.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public async Task<ActionResult> About()
         {
-            ITestServices ts = ServicesFactory.GetTestServices();
-            var test = ts.GetFirst();
-            ViewBag.Message = test.Name + " " + test.Surname;
+            ICityServices cs = ServicesFactory.GetCityServices();
+            //var all = await cs.GetAllCities();
+            //var test = all.First();
+            //ViewBag.Message = test.Name + " " + test.County;
+
+            cs.GetCitesWeatherInformation();
 
             return View();
         }

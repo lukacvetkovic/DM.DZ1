@@ -14,5 +14,10 @@ namespace BusinessServices
         {
             return new TestServices();
         }
+
+        public static ICityServices GetCityServices()
+        {
+            return new CityServices();
+        }
     }
 }
