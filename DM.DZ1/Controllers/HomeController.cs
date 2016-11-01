@@ -12,8 +12,14 @@ namespace DM.DZ1.Controllers
     [RequireHttps]
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
+            ICityServices cs = ServicesFactory.GetCityServices();
+
+            var allCities = await cs.GetAllCities();
+
+            ViewBag.CityWeather = allCities;
+
             return View();
         }
 
@@ -24,7 +30,7 @@ namespace DM.DZ1.Controllers
             //var test = all.First();
             //ViewBag.Message = test.Name + " " + test.County;
 
-            cs.GetCitesWeatherInformation();
+            await cs.GetCitesWeatherInformation();
 
             return View();
         }

@@ -7,6 +7,7 @@ using BusinessEntities;
 using BusinessServices.Helpers;
 using BusinessServices.Interfaces;
 using DataModel.GenericRepository;
+using MongoDB.Driver;
 
 namespace BusinessServices.Implementation
 {
@@ -20,6 +21,7 @@ namespace BusinessServices.Implementation
         }
         public async Task<List<City>> GetAllCities()
         {
+            //var filter = Builders<City>.Filter.Where(p => p.Name=="Dugo Selo");
             var cities = await _mongoDb.GetAll<City>();
 
             return cities.Entities.ToList();
@@ -31,7 +33,7 @@ namespace BusinessServices.Implementation
 
             List<CityWeather> cityWeathers = new List<CityWeather>();
 
-            foreach (var city in cities.Entities.ToList())
+            foreach (var city in cities.Entities.ToList().Take(2))
             {
                 cityWeathers.Add(new CityWeather() { City = city, WeatherInformation = WeatherHelper.GetWeatherInformationForCity(city) });
             }

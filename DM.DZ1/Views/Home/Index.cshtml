@@ -1,31 +1,59 @@
-﻿@{
+﻿@using BusinessServices.Helpers
+@{
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<html>
+<head>
+    <title>loadMapAsyncHTML</title>
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+</head>
+<body>
+    <div id='printoutPanel'></div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+    <div id='myMap' style='width: 100vw; height: 100vh; clear: both'></div>
+
+    <script type="text/javascript">
+
+        var map;
+
+        function loadMapScenario() {
+
+            var that = this;
+            map = new Microsoft.Maps.Map(document.getElementById('myMap'),
+            {
+                credentials: 'Am2I_pYdXm_FnjHKk3ERrQG2-MIvdQxn67s_tOAs_L7ZTs49YnNbcfTNfrx16PXX',
+                zoom: 8
+            });
+
+            var myArray = [];
+            var pushpin;
+
+            @foreach (var r in ViewBag.CityWeather)
+            {
+                <text>
+            myArray.push(JSON.parse('@Html.Raw(Json.Encode(r))'));
+            </text>
+            }
+
+            console.log(myArray);
+
+            map.entities.clear();
+            myArray.forEach(function (city) {
+                pushpin = new Microsoft.Maps.Pushpin(map.getCenter(), null);
+                Microsoft.Maps.Events.addHandler(pushpin, 'click', function() {
+                    console.log("tu sam!");
+                });
+                map.entities.push(pushpin);
+
+                pushpin.setLocation(new Microsoft.Maps.Location(city.Information.geometry.location.lat, city.Information.geometry.location.lng));
+            });
+
+        }
+
+
+    </script>
+    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?branch=release&callback=loadMapScenario' async defer></script>
+</body>
+
+</html>
