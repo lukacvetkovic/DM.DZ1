@@ -69,6 +69,7 @@
     <Compile Include="GenericRepository\MongoDbRepository.cs" />
     <Compile Include="GenericRepository\Result.cs" />
     <Compile Include="Helpers\HelperService.cs" />
+    <Compile Include="Helpers\JSONHelper.cs" />
     <Compile Include="NoSQLDatabase\MongoDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLDatabase\AspNetRoles.cs">

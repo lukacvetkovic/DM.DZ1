@@ -10,7 +10,7 @@ namespace DataModel.NoSQLDatabase
     public class MongoDbContext
     {
         String ConnectionString =
-            "mongodb://dmdz1:VWV4SACxznmXLcmjntIU5VwMF5LarGyOy0hycwXmsGup3bSXae7xnZKW6niX2mYuEEx8MydsQ6Vvhb7uFfSVyw==@dmdz1.documents.azure.com:10250/?ssl=true";
+            "mongodb://localhost:27017/mydb";
 
         private static MongoDbContext _instance;
         public readonly IMongoDatabase Db;

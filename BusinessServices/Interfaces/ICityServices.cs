@@ -11,5 +11,8 @@ namespace BusinessServices.Interfaces
     {
         Task<List<City>> GetAllCities();
         Task<List<CityWeather>> GetCitesWeatherInformation();
+        Task<WeatherInformation> GetCityWeatherInformation(string name);
+
+
     }
 }

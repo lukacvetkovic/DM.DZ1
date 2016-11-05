@@ -33,7 +33,7 @@ namespace BusinessServices.Implementation
 
             List<CityWeather> cityWeathers = new List<CityWeather>();
 
-            foreach (var city in cities.Entities.ToList().Take(2))
+            foreach (var city in cities.Entities.ToList())
             {
                 cityWeathers.Add(new CityWeather() { City = city, WeatherInformation = WeatherHelper.GetWeatherInformationForCity(city) });
             }
@@ -41,7 +41,16 @@ namespace BusinessServices.Implementation
             return cityWeathers;
         }
 
+        public async Task<WeatherInformation> GetCityWeatherInformation(string name)
+        {
+            var filter = Builders<City>.Filter.Where(p => p.Name == name);
+            var city = await _mongoDb.GetOne<City>(filter);
+            if (city?.Entity == null)
+            {
+                return null;
+            }
 
-
+            return WeatherHelper.GetWeatherInformationForCity(city.Entity);
+        }
     }
 }

@@ -11,7 +11,7 @@
 <body>
     <div id='printoutPanel'></div>
 
-    <div id='myMap' style='width: 100vw; height: 100vh; clear: both'></div>
+    <div id='myMap' style='width: 60vw; height: 80vh; margin-top: 5vh'></div>
 
     <script type="text/javascript">
 
@@ -30,23 +30,49 @@
             var pushpin;
 
             @foreach (var r in ViewBag.CityWeather)
-            {
-                <text>
+        {
+            <text>
             myArray.push(JSON.parse('@Html.Raw(Json.Encode(r))'));
             </text>
-            }
+        }
 
             console.log(myArray);
 
             map.entities.clear();
             myArray.forEach(function (city) {
                 pushpin = new Microsoft.Maps.Pushpin(map.getCenter(), null);
-                Microsoft.Maps.Events.addHandler(pushpin, 'click', function() {
-                    console.log("tu sam!");
-                });
+                Microsoft.Maps.Events.addHandler(pushpin,
+                    'click',
+                    function () {
+                        console.log(city.Name);
+                        $.ajax({
+                            headers: {
+                                Accept: "application/json"
+                            },
+                            url: "https://localhost:44368/Weather/GetWeatherForCity?cityName=" + city.Name,
+                            success: function (data) {
+
+                                var information = JSON.parse(data);
+                                console.log(information.Channel.item);
+                                $('#myModal .modal-header').html('<h4 class="modal-title">' + city.Name + '</h4>');
+                                var res = information.Channel.item.description
+                                    .replace("(provided by <a href=\"http://www.weather.com\" >The Weather Channel</a>)", "");
+                                var res = res
+                                    .replace("<BR />\n]]>", "");
+
+                                console.log(res);
+                                $('#myModal .modal-body').html(res);
+                                $('#myModal').modal('show');
+
+                            }
+                        });
+
+
+                    });
                 map.entities.push(pushpin);
 
-                pushpin.setLocation(new Microsoft.Maps.Location(city.Information.geometry.location.lat, city.Information.geometry.location.lng));
+                pushpin.setLocation(new Microsoft.Maps.Location(city.Information.geometry.location.lat,
+                    city.Information.geometry.location.lng));
             });
 
         }
@@ -54,6 +80,30 @@
 
     </script>
     <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?branch=release&callback=loadMapScenario' async defer></script>
-</body>
 
+
+
+    <div class="container">
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Modal Header</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="cityWeather">Some text in the modal.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</body>
 </html>
