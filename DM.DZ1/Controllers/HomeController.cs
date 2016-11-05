@@ -6,9 +6,12 @@ using System.Web;
 using System.Web.Mvc;
 using BusinessServices;
 using BusinessServices.Interfaces;
+using DataModel.SQLDatabase;
+using Microsoft.AspNet.Identity;
 
 namespace DM.DZ1.Controllers
 {
+    [Authorize]
     [RequireHttps]
     public class HomeController : Controller
     {
@@ -23,14 +26,20 @@ namespace DM.DZ1.Controllers
             return View();
         }
 
+
+        public ActionResult UpdateUserData(UserInformation userInformation)
+        {
+            IUserInformationServices us = ServicesFactory.GetUserInfrmationServices();
+            us.InsertOrUpdateUserInformation(userInformation, User.Identity.GetUserId());
+            return RedirectToAction("Index");
+        }
+
         public async Task<ActionResult> About()
         {
-            ICityServices cs = ServicesFactory.GetCityServices();
-            //var all = await cs.GetAllCities();
-            //var test = all.First();
-            //ViewBag.Message = test.Name + " " + test.County;
-
-            await cs.GetCitesWeatherInformation();
+            string currentUserId = User.Identity.GetUserId();
+            IUserInformationServices ts = ServicesFactory.GetUserInfrmationServices();
+            var userInfo = ts.GetUserInformation(currentUserId);
+            ViewBag.Message = userInfo.Name + " " + userInfo.Email;
 
             return View();
         }

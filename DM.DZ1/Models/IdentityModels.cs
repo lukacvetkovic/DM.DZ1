@@ -21,7 +21,7 @@ namespace DM.DZ1.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("DMDZ1DbCF", throwIfV1Schema: false)
         {
         }
 

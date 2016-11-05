@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Claims;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -35,7 +36,7 @@ namespace DM.DZ1
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
-            });            
+            });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.
@@ -59,21 +60,24 @@ namespace DM.DZ1
             {
                 AppId = "333212237053165",
                 AppSecret = "f7ce933adc500870a6fb00dab103bfd2",
+                Scope = { "email", "user_birthday", "user_location" },
                 Provider = new FacebookAuthenticationProvider
                 {
                     OnAuthenticated = async context =>
                     {
-                        // Retrieve the OAuth access token to store for subsequent API calls
-                        string accessToken = context.AccessToken;
+                        context.Identity.AddClaim(new System.Security.Claims.Claim("FacebookAccessToken", context.AccessToken));
+                        foreach (var claim in context.User)
+                        {
+                            var claimType = string.Format("urn:facebook:{0}", claim.Key);
+                            string claimValue = claim.Value.ToString();
+                            if (!context.Identity.HasClaim(claimType, claimValue))
+                                context.Identity.AddClaim(new System.Security.Claims.Claim(claimType, claimValue, "XmlSchemaString", "Facebook"));
+                        }
 
-                        // Retrieve the username
-                        string facebookUserName = context.UserName;
-
-                        // You can even retrieve the full JSON-serialized user
-                        var serializedUser = context.User;
                     }
                 }
             };
+
 
             app.UseFacebookAuthentication(options);
 

@@ -10,9 +10,9 @@ namespace BusinessServices
 {
     public class ServicesFactory
     {
-        public static ITestServices GetTestServices()
+        public static IUserInformationServices GetUserInfrmationServices()
         {
-            return new TestServices();
+            return new UserInformationServices();
         }
 
         public static ICityServices GetCityServices()

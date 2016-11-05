@@ -102,7 +102,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DMDZ1Db.edmx</DependentUpon>
     </Compile>
-    <Compile Include="SQLDatabase\Test.cs">
+    <Compile Include="SQLDatabase\UserInformation.cs">
       <DependentUpon>DMDZ1Db.tt</DependentUpon>
     </Compile>
     <Compile Include="UnitOfWork\UnitOfWork.cs" />

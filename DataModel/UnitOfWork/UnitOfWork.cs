@@ -18,7 +18,7 @@ namespace DataModel.UnitOfWork
         #region Private member variables...
 
         private DMDZ1Db _context = null;
-        private IGenericRepository<Test> _testRepository;
+        private IGenericRepository<UserInformation> _userInformationRepository;
         #endregion
 
         public UnitOfWork()
@@ -31,13 +31,13 @@ namespace DataModel.UnitOfWork
         /// <summary>
         /// Get/Set Property for product repository.
         /// </summary>
-        public IGenericRepository<Test> TestRepository
+        public IGenericRepository<UserInformation> UserInformationRepository
         {
             get
             {
-                if (this._testRepository == null)
-                    this._testRepository = new GenericRepositorySQL<Test>(_context);
-                return _testRepository;
+                if (this._userInformationRepository == null)
+                    this._userInformationRepository = new GenericRepositorySQL<UserInformation>(_context);
+                return _userInformationRepository;
             }
         }
         #endregion
