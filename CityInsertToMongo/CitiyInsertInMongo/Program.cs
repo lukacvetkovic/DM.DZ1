@@ -49,7 +49,7 @@ namespace CitiyInsertInMongo
 
                 }
             }
-
+            Console.WriteLine("Gotovo!");
             Console.ReadLine();
 
 
